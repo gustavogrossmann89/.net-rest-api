@@ -8,15 +8,23 @@ namespace TrilhaApiDesafio.Common.Services
     public class TarefaService : ITarefaService
     {
         private readonly IRepository<Tarefa> _tarefaRepository;
-        public TarefaService(IRepository<Tarefa> tarefaRepository)
+        private readonly IRepository<Pessoa> _pessoaRepository;
+        public TarefaService(IRepository<Tarefa> tarefaRepository, IRepository<Pessoa> pessoaRepository)
         {
             _tarefaRepository = tarefaRepository;
+            _pessoaRepository = pessoaRepository;
         }
 
         public Tarefa CreateTarefa(Tarefa tarefa)
         {
             if (tarefa.Id != 0 || tarefa.Data == DateTime.MinValue)
                 return null;
+
+            if (tarefa.Responsavel != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefa.Responsavel);
+                //Console.WriteLine(pessoa);
+            }
 
             Tarefa tarefaSalva = _tarefaRepository.Create(tarefa);
             _tarefaRepository.Save();

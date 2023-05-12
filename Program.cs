@@ -14,6 +14,7 @@ builder.Services.AddDbContext<OrganizadorContext>(options =>
 
 // Services
 builder.Services.AddScoped<ITarefaService, TarefaService>();
+builder.Services.AddScoped<IPessoaService, PessoaService>();
 
 // Repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
