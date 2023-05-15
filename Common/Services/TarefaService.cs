@@ -20,14 +20,21 @@ namespace TrilhaApiDesafio.Common.Services
             if (tarefa.Id != 0 || tarefa.Data == DateTime.MinValue)
                 return null;
 
+            if (tarefa.ResponsavelId != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefa.ResponsavelId);
+                if (pessoa != null)
+                {
+                    tarefa.Responsavel = pessoa;
+                }
+                else
+                {
+                    tarefa.ResponsavelId = null;
+                }
+            }
+
             Tarefa tarefaSalva = _tarefaRepository.Create(tarefa);
             _tarefaRepository.Save();
-
-            if (tarefaSalva.ResponsavelId != null)
-            {
-                var pessoa = _pessoaRepository.GetById(tarefaSalva.ResponsavelId);
-                tarefaSalva.Responsavel = pessoa;
-            }
 
             return tarefaSalva;
         }
@@ -124,6 +131,21 @@ namespace TrilhaApiDesafio.Common.Services
             tarefaBanco.Descricao = tarefa.Descricao;
             tarefaBanco.Data = tarefa.Data;
             tarefaBanco.Status = tarefa.Status;
+
+            if (tarefa.ResponsavelId != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefa.ResponsavelId);
+                if (pessoa != null)
+                {
+                    tarefaBanco.Responsavel = pessoa;
+                    tarefaBanco.ResponsavelId = tarefa.ResponsavelId;
+                }
+                else
+                {
+                    tarefaBanco.Responsavel = null;
+                    tarefaBanco.ResponsavelId = null;
+                }
+            }
 
             _tarefaRepository.Update(tarefaBanco);
             _tarefaRepository.Save();

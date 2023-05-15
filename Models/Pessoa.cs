@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TrilhaApiDesafio.Models
 {
@@ -11,6 +12,7 @@ namespace TrilhaApiDesafio.Models
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("Responsavel")]
         public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
