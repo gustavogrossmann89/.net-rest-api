@@ -5,6 +5,9 @@ namespace TrilhaApiDesafio.Context
 {
     public class OrganizadorContext : DbContext
     {
+        public DbSet<Tarefa> Tarefas { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+
         protected readonly IConfiguration Configuration;
 
         public OrganizadorContext(IConfiguration configuration)
@@ -18,7 +21,15 @@ namespace TrilhaApiDesafio.Context
             options.UseInMemoryDatabase("TestDb");
         }
 
-        public DbSet<Tarefa> Tarefas { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Tarefa>(entity =>
+            {
+                entity.HasOne(d => d.Responsavel)
+                    .WithMany(p => p.Tarefas)
+                    .HasForeignKey(d => d.ResponsavelId)
+                    .HasConstraintName("FK_Tarefa_TB_Grupos");
+            });
+        }
     }
 }

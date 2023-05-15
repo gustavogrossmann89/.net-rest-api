@@ -20,14 +20,15 @@ namespace TrilhaApiDesafio.Common.Services
             if (tarefa.Id != 0 || tarefa.Data == DateTime.MinValue)
                 return null;
 
-            if (tarefa.Responsavel != null)
-            {
-                var pessoa = _pessoaRepository.GetById(tarefa.Responsavel);
-                //Console.WriteLine(pessoa);
-            }
-
             Tarefa tarefaSalva = _tarefaRepository.Create(tarefa);
             _tarefaRepository.Save();
+
+            if (tarefaSalva.ResponsavelId != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefaSalva.ResponsavelId);
+                tarefaSalva.Responsavel = pessoa;
+            }
+
             return tarefaSalva;
         }
 
@@ -44,27 +45,70 @@ namespace TrilhaApiDesafio.Common.Services
 
         public IEnumerable<Tarefa> GetAllTarefas()
         {
-            return _tarefaRepository.GetAll();
+            var tarefas = _tarefaRepository.GetAll();
+            tarefas.ToList().ForEach(item =>
+            {
+                if (item.ResponsavelId != null)
+                {
+                    var pessoa = _pessoaRepository.GetById(item.ResponsavelId);
+                    item.Responsavel = pessoa;
+                }
+            });
+            return tarefas;
         }
 
         public IEnumerable<Tarefa> GetTarefaByData(DateTime data)
         {
-            return _tarefaRepository.Get(x => x.Data.Date == data.Date);
+            var tarefas = _tarefaRepository.Get(x => x.Data.Date == data.Date);
+            tarefas.ToList().ForEach(item =>
+            {
+                if (item.ResponsavelId != null)
+                {
+                    var pessoa = _pessoaRepository.GetById(item.ResponsavelId);
+                    item.Responsavel = pessoa;
+                }
+            });
+            return tarefas;
         }
 
         public Tarefa GetTarefaById(int id)
         {
-            return _tarefaRepository.GetById(id);
+            var tarefa = _tarefaRepository.GetById(id);
+            if (tarefa.ResponsavelId != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefa.ResponsavelId);
+                tarefa.Responsavel = pessoa;
+            }
+
+            return tarefa;
         }
 
         public IEnumerable<Tarefa> GetTarefaByStatus(EnumStatusTarefa status)
         {
-            return _tarefaRepository.Get(x => x.Status == status);
+            var tarefas = _tarefaRepository.Get(x => x.Status == status);
+            tarefas.ToList().ForEach(item =>
+            {
+                if (item.ResponsavelId != null)
+                {
+                    var pessoa = _pessoaRepository.GetById(item.ResponsavelId);
+                    item.Responsavel = pessoa;
+                }
+            });
+            return tarefas;
         }
 
         public IEnumerable<Tarefa> GetTarefaByTitulo(string titulo)
         {
-            return _tarefaRepository.Get(x => x.Titulo.ToUpper().Contains(titulo.ToUpper()));
+            var tarefas = _tarefaRepository.Get(x => x.Titulo.ToUpper().Contains(titulo.ToUpper()));
+            tarefas.ToList().ForEach(item =>
+            {
+                if (item.ResponsavelId != null)
+                {
+                    var pessoa = _pessoaRepository.GetById(item.ResponsavelId);
+                    item.Responsavel = pessoa;
+                }
+            });
+            return tarefas;
         }
 
         public Tarefa UpdateTarefa(int id, Tarefa tarefa)
@@ -83,6 +127,13 @@ namespace TrilhaApiDesafio.Common.Services
 
             _tarefaRepository.Update(tarefaBanco);
             _tarefaRepository.Save();
+
+            if (tarefaBanco.ResponsavelId != null)
+            {
+                var pessoa = _pessoaRepository.GetById(tarefaBanco.ResponsavelId);
+                tarefaBanco.Responsavel = pessoa;
+            }
+
             return tarefaBanco;
         }
     }

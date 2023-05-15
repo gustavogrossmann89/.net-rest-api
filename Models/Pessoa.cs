@@ -11,7 +11,7 @@ namespace TrilhaApiDesafio.Models
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
 
-        [InverseProperty("ResponsavelNavigation")]
+        [InverseProperty("Responsavel")]
         public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

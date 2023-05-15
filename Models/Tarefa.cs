@@ -13,10 +13,10 @@ namespace TrilhaApiDesafio.Models
         public string Descricao { get; set; }
         public DateTime Data { get; set; }
         public EnumStatusTarefa Status { get; set; }
-        public int? Responsavel { get; set; }
+        public int? ResponsavelId { get; set; }
 
-        [ForeignKey(nameof(Responsavel))]
+        [ForeignKey(nameof(ResponsavelId))]
         [InverseProperty(nameof(Pessoa.Tarefas))]
-        public virtual Pessoa ResponsavelNavigation { get; set; }
+        public virtual Pessoa Responsavel { get; set; }
     }
 }
