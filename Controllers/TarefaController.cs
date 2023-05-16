@@ -16,6 +16,33 @@ namespace TrilhaApiDesafio.Controllers
             _tarefaService = tarefaService;
         }
 
+        [HttpPost]
+        public IActionResult Criar(Tarefa tarefa)
+        {
+            var result = _tarefaService.CreateTarefa(tarefa);
+            if (result.Succeeded)
+                return Created($"/{result.Data.Id}", tarefa);
+            return BadRequest(result);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Atualizar(int id, Tarefa tarefa)
+        {
+            var result = _tarefaService.UpdateTarefa(id, tarefa);
+            if (result.Succeeded)
+                return Ok(tarefa);
+            return BadRequest(result);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
+        {
+            var result = _tarefaService.DeleteTarefa(id);
+            if (result.Succeeded)
+                return NoContent();
+            return BadRequest(result);
+        }
+
         [HttpGet("{id}")]
         public IActionResult ObterPorId(int id)
         {
@@ -61,36 +88,6 @@ namespace TrilhaApiDesafio.Controllers
                 return NotFound();
 
             return Ok(result);
-        }
-
-        [HttpPost]
-        public IActionResult Criar(Tarefa tarefa)
-        {
-            tarefa = _tarefaService.CreateTarefa(tarefa);
-            if (tarefa == null)
-                return BadRequest(new { Erro = "Dados inválidos para criação" });
-
-            return CreatedAtAction(nameof(ObterPorId), new { id = tarefa.Id }, tarefa);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, Tarefa tarefa)
-        {
-            tarefa = _tarefaService.UpdateTarefa(id, tarefa);
-            if (tarefa == null)
-                return BadRequest(new { Erro = "Dados inválidos para atualização" });
-
-            return Ok(tarefa);
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
-        {
-            var deleted = _tarefaService.DeleteTarefa(id);
-            if (!deleted)
-                return BadRequest();
-
-            return NoContent();
         }
     }
 }

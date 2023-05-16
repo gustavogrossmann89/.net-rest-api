@@ -2,6 +2,9 @@ using TrilhaApiDesafio.Models;
 using TrilhaApiDesafio.Common.Repositories.Interfaces;
 using TrilhaApiDesafio.Common.Services.Interfaces;
 
+using DotNetCore.Validation;
+using DotNetCore.Results;
+
 namespace TrilhaApiDesafio.Common.Services
 {
     public class PessoaService : IPessoaService
@@ -12,25 +15,35 @@ namespace TrilhaApiDesafio.Common.Services
             _pessoaRepository = pessoaRepository;
         }
 
-        public Pessoa Create(Pessoa tarefa)
+        public IResult<Pessoa> Create(Pessoa pessoa)
         {
-            if (tarefa.Id != 0)
-                return null;
+            var validation = new PessoaValidator().Validation(pessoa);
+            if (validation.Failed)
+                return validation.Fail<Pessoa>();
 
-            Pessoa pessoaSalva = _pessoaRepository.Create(tarefa);
+            var pessoasExistentes = _pessoaRepository.Get(x => x.CPF == pessoa.CPF);
+            if (pessoasExistentes.ToList().Count() > 0)
+                return Result<Pessoa>.Fail("já existe pessoa cadastrada com este CPF");
+
+            pessoa = _pessoaRepository.Create(pessoa);
             _pessoaRepository.Save();
-            return pessoaSalva;
+            return pessoa.Success("Pessoa criada com sucesso");
         }
 
-        public bool Delete(int id)
+        public DotNetCore.Results.IResult Delete(int id)
         {
             var pessoa = _pessoaRepository.GetById(id);
             if (pessoa == null)
-                return false;
+                return Result.Fail("Pessoa não encontrada");
 
             _pessoaRepository.Delete(pessoa);
             _pessoaRepository.Save();
-            return true;
+            return Result.Success();
+        }
+
+        public Pessoa GetById(int id)
+        {
+            return _pessoaRepository.GetById(id);
         }
 
         public IEnumerable<Pessoa> GetAll()
@@ -38,9 +51,9 @@ namespace TrilhaApiDesafio.Common.Services
             return _pessoaRepository.GetAll();
         }
 
-        public Pessoa GetById(int id)
+        public IEnumerable<Pessoa> GetPessoaByCPF(string CPF)
         {
-            return _pessoaRepository.GetById(id);
+            return _pessoaRepository.Get(x => x.CPF == CPF);
         }
     }
 }

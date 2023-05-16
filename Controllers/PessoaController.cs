@@ -15,6 +15,24 @@ namespace TrilhaApiDesafio.Controllers
             _pessoaService = pessoaService;
         }
 
+        [HttpPost]
+        public IActionResult Criar(Pessoa pessoa)
+        {
+            var result = _pessoaService.Create(pessoa);
+            if (result.Succeeded)
+                return Created($"/{result.Data.Id}", pessoa);
+            return BadRequest(result);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
+        {
+            var result = _pessoaService.Delete(id);
+            if (result.Succeeded)
+                return NoContent();
+            return BadRequest(result);
+        }
+
         [HttpGet("{id}")]
         public IActionResult ObterPorId(int id)
         {
@@ -30,26 +48,6 @@ namespace TrilhaApiDesafio.Controllers
         {
             var result = _pessoaService.GetAll();
             return new JsonResult(Ok(result));
-        }
-
-        [HttpPost]
-        public IActionResult Criar(Pessoa pessoa)
-        {
-            pessoa = _pessoaService.Create(pessoa);
-            if (pessoa == null)
-                return BadRequest(new { Erro = "Dados inválidos para criação" });
-
-            return CreatedAtAction(nameof(ObterPorId), new { id = pessoa.Id }, pessoa);
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
-        {
-            var deleted = _pessoaService.Delete(id);
-            if (!deleted)
-                return BadRequest();
-
-            return NoContent();
         }
     }
 }

@@ -1,12 +1,15 @@
 using TrilhaApiDesafio.Models;
 
+using DotNetCore.Results;
+
 namespace TrilhaApiDesafio.Common.Services.Interfaces
 {
     public interface IPessoaService
     {
-        Pessoa Create(Pessoa pessoa);
-        bool Delete(int id);
-        IEnumerable<Pessoa> GetAll();
+        IResult<Pessoa> Create(Pessoa pessoa);
+        DotNetCore.Results.IResult Delete(int id);
         Pessoa GetById(int id);
+        IEnumerable<Pessoa> GetAll();
+        IEnumerable<Pessoa> GetPessoaByCPF(string CPF);
     }
 }
