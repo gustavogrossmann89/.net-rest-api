@@ -8,17 +8,8 @@ namespace TrilhaApiDesafio.Context
         public DbSet<Tarefa> Tarefas { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
 
-        protected readonly IConfiguration Configuration;
-
-        public OrganizadorContext(IConfiguration configuration)
+        public OrganizadorContext(DbContextOptions options) : base(options)
         {
-            Configuration = configuration;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            // in memory database used for simplicity, change to a real db for production applications
-            options.UseInMemoryDatabase("TestDb");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
