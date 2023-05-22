@@ -1,6 +1,8 @@
 # Proposta
 
-Desafio proposto na Trilha .NET - API e Entity Framework da www.dio.me
+Realizar o desafio proposto na Trilha .NET - API e Entity Framework da www.dio.me
+
+Depois disso, incrementar o projeto com outras classes, validações, testes unitários e etc, botando em prática demais conhecimentos adquiridos sobre a linguagem
 
 ## Desafio de projeto
 
@@ -8,11 +10,11 @@ Usar conhecimentos adquiridos no módulo de API e Entity Framework, da trilha .N
 
 ## Contexto
 
-Classe de tarefa:
+Classe tarefa (v1):
 
 ![Diagrama da classe Tarefa](diagrama.png)
 
-**Swagger**
+**Swagger V1**
 
 ![Métodos Swagger](swagger.png)
 
