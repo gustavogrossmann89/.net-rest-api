@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "901d0878-996c-42aa-a1c7-9b49cc723b50",
+		"name": "Trilha DotNet Api Desafio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4203594"
+	},
+	"item": [
+		{
+			"name": "Tarefas",
+			"item": [
+				{
+					"name": "Tarefa",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Fazer o desafio\",\n  \"descricao\": \"Fazer o desafio em .net\",\n  \"data\": \"2023-05-11T20:00:00.000Z\",\n  \"status\": \"Finalizado\",\n  \"responsavelId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7295/Tarefa",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tarefa/1",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Fazer o desafio mais complexo\",\n  \"descricao\": \"Fazer o desafio mais complexo em .net\",\n  \"data\": \"2023-05-12T20:00:00.000Z\",\n  \"status\": \"Pendente\",\n  \"responsavelId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/ObterTodos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"ObterTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tarefa/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObterPorTitulo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/ObterPorTitulo?titulo=complexo",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"ObterPorTitulo"
+							],
+							"query": [
+								{
+									"key": "titulo",
+									"value": "complexo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObterPorData",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/ObterPorData?data=2023-05-12",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"ObterPorData"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "2023-05-12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObterPorStatus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Tarefa/ObterPorSTatus?status=pendente",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Tarefa",
+								"ObterPorSTatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pendente"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pessoas",
+			"item": [
+				{
+					"name": "Pessoa",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Pessoa\",\n  \"cpf\": \"04623367002\",\n  \"dataNascimento\": \"1999-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7295/Pessoa",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Pessoa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Pessoa/ObterTodos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Pessoa",
+								"ObterTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pessoa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7295/Pessoa/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7295",
+							"path": [
+								"Pessoa",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -95,7 +95,7 @@ namespace TrilhaApiDesafio.Common.Services
         public Tarefa GetTarefaById(int id)
         {
             var tarefa = _tarefaRepository.GetById(id);
-            if (tarefa.ResponsavelId != null)
+            if (tarefa != null && tarefa.ResponsavelId != null)
             {
                 var pessoa = _pessoaRepository.GetById(tarefa.ResponsavelId);
                 tarefa.Responsavel = pessoa;
